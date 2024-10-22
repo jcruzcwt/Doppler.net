@@ -29,32 +29,32 @@ namespace LoGiC.NET.Protections
             Program.Module.EncId = Guid.NewGuid();
             Program.Module.EncBaseId = Guid.NewGuid();
 
-            Program.Module.Name = Generated;
-            if (Program.Module.EntryPoint != null)
-            {
-                Program.Module.EntryPoint.Name = Generated;
-            }
+            //Program.Module.Name = Generated; // sira
+            //if (Program.Module.EntryPoint != null)
+            //{
+            //    Program.Module.EntryPoint.Name = Generated;
+            //}
 
             foreach (TypeDef type in Program.Module.Types)
             {
-                if (Program.Module.EntryPoint != null)
-                {
-                    if (type.Namespace == Program.Module.EntryPoint.FullName.Split(' ')[1].Split('.')[0])
-                    {
-                        // Hide namespace
-                        type.Namespace = string.Empty;
-                        type.Name = String(MemberRenamer.StringLength());
-                    }
-                }
+                //if (Program.Module.EntryPoint != null) // sira
+                //{
+                //    if (type.Namespace == Program.Module.EntryPoint.FullName.Split(' ')[1].Split('.')[0])
+                //    {
+                //        // Hide namespace
+                //        type.Namespace = string.Empty;
+                //        type.Name = String(MemberRenamer.StringLength());
+                //    }
+                //}
 
                 foreach (MethodDef m in type.Methods)
                 {
+                    //if (CanRename(m) && !Program.FileExtension.Contains("dll"))
                     if (CanRename(m) && !Program.ForceWinForms && !Program.FileExtension.Contains("dll"))
                     {
                         m.Name = Generated;
                         ++MethodAmount;
                     }
-
                     foreach (Parameter para in m.Parameters)
                         if (CanRename(para))
                         {
@@ -71,11 +71,13 @@ namespace LoGiC.NET.Protections
                     }
 
                 foreach (FieldDef field in type.Fields)
-                    if (CanRename(field))
+                {
+                    if (CanRename(field) && !Program.FilePath.Contains("BAL_General.dll"))
                     {
                         field.Name = String(MemberRenamer.StringLength());
                         ++FieldAmount;
                     }
+                }
 
                 foreach (EventDef e in type.Events)
                     if (CanRename(e))

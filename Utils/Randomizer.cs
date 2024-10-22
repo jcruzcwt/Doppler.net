@@ -10,7 +10,8 @@ namespace LoGiC.NET.Utils
     public class Randomizer
     {
         private static readonly RandomNumberGenerator csp = RandomNumberGenerator.Create();
-        private static readonly char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 !:;,ù^$*&é\"'(-è_çà)=?./§%¨£µ1234567890°+".ToCharArray();
+        //abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 !:;,ù^$*&é\"'(-è_çà)=?./§%¨£µ1234567890°+
+        private static readonly char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
 
         public static string Generated;
 

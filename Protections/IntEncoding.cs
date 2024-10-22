@@ -54,12 +54,12 @@ namespace LoGiC.NET.Protections
                                 method.Body.Instructions.Insert(i + 2, OpCodes.Call.ToInstruction(Program.Module.Import(typeof(Math).GetMethod("Max", new Type[] { typeof(int), typeof(int) }))));
                             }*/
 
-                            // The Min method.
-                            if (operand < int.MaxValue)
-                            {
-                                method.Body.Instructions.Insert(i + 1, OpCodes.Ldc_I4.ToInstruction(int.MaxValue));
-                                method.Body.Instructions.Insert(i + 2, OpCodes.Call.ToInstruction(Program.Module.Import(typeof(Math).GetMethod("Min", new Type[] { typeof(int), typeof(int) }))));
-                            }
+                            // The Min method.// sira
+                            //if (operand < int.MaxValue)
+                            //{
+                            //    method.Body.Instructions.Insert(i + 1, OpCodes.Ldc_I4.ToInstruction(int.MaxValue));
+                            //    method.Body.Instructions.Insert(i + 2, OpCodes.Call.ToInstruction(Program.Module.Import(typeof(Math).GetMethod("Min", new Type[] { typeof(int), typeof(int) }))));
+                            //}
 
                             ++Amount;
                         }

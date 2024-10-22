@@ -4,6 +4,7 @@ using dnlib.DotNet;
 using LoGiC.NET.Protections;
 using SharpConfigParser;
 using LoGiC.NET.Utils;
+using System.Net.Configuration;
 
 namespace LoGiC.NET
 {
@@ -42,12 +43,14 @@ namespace LoGiC.NET
             ForceWinForms = bool.Parse(p.Read("ForceWinFormsCompatibility").ReadResponse().ReplaceSpaces());
             DontRename = bool.Parse(p.Read("DontRename").ReadResponse().ReplaceSpaces());
 
+            obfuscation:
             Randomizer.Initialize();
 
-            obfuscation:
             ForceWinForms = true;
             Module = ModuleDefMD.Load(path);
             FileExtension = Path.GetExtension(path);
+
+            FilePath = path;
 
             Console.WriteLine("Renaming...");
             Renamer.Execute();
@@ -55,8 +58,8 @@ namespace LoGiC.NET
             Console.WriteLine("Adding junk methods...");
             JunkMethods.Execute();
 
-            Console.WriteLine("Adding proxy calls...");
-            //ProxyAdder.Execute();
+            //Console.WriteLine("Adding proxy calls...");
+            //ProxyAdder.Execute(); // SIRA
 
             Console.WriteLine("Encrypting strings...");
             StringEncryption.Execute();
@@ -71,7 +74,7 @@ namespace LoGiC.NET
             ControlFlow.Execute();
 
             Console.WriteLine("Encoding ints...");
-            IntEncoding.Execute();
+            IntEncoding.Execute(); // partially sira
 
             Console.WriteLine("Watermarking...");
             Watermark.AddAttribute();
@@ -87,8 +90,8 @@ namespace LoGiC.NET
             // Save stream to file
             File.WriteAllBytes(pathOutput, Stream.ToArray());
 
-            //if (AntiTamper.Tampered)
-            //    AntiTamper.Inject(FilePath);
+            if (AntiTamper.Tampered)
+                AntiTamper.Inject(FilePath);
 
             Console.WriteLine("Done!");
         }
